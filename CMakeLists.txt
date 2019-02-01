@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -122,8 +123,11 @@ include_directories(
 
 ## Declare a C++ library
  add_library(${PROJECT_NAME}
-   src/${PROJECT_NAME}/path_plan.cpp
- )
+#   src/${PROJECT_NAME}/path_plan.cpp
+    src/path_plan/path_plan.cpp
+    src/path_plan/mode.cpp
+    src/path_plan/visit.cpp
+         )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -148,6 +152,7 @@ include_directories(
 ## Specify libraries to link a library or executable target against
  target_link_libraries(${PROJECT_NAME}_node
    ${catkin_LIBRARIES}
+         path_plan
  )
 
 #############
