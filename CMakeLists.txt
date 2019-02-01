@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(path_plan)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+ add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+# find_package(Boost REQUIRED COMPONENTS system assign)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -127,7 +127,7 @@ include_directories(
          src/path_plan/robot.cpp
     src/path_plan/mode.cpp
          src/path_plan/key_visit.cpp
-         )
+         src/path_plan/device.cpp)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries

@@ -7,6 +7,7 @@
 
 #include "ros/ros.h"
 #include "key_visit.h"
+#include "device.h"
 
 class Robot;
 class IMode {
@@ -16,8 +17,11 @@ public:
     virtual ~IMode();
     Robot *getRobot() const;
 
+    virtual void updateDevice()=0;
+
 private:
     static Robot* robot;
+    Devices devices;
 public:
     static void setRobot(Robot *robot);
 };
@@ -26,6 +30,8 @@ class IdleMode: public IMode{
 public:
     void exit();
     void accept(KeyVisit* key);
+    void updateDevice();
+
 };
 
 //class ACleanMode:public IMode{
@@ -36,18 +42,21 @@ class NormalCleanMode: public IMode{
 public:
     void exit();
     void accept(KeyVisit* key);
+    void updateDevice();
 };
 
 class SpotCleanMode: public IMode{
 public:
     void exit();
     void accept(KeyVisit* key);
+    void updateDevice();
 };
 
 class FollowWallCleanMode: public IMode{
 public:
     void exit();
     void accept(KeyVisit* key);
+    void updateDevice();
 };
 
 //class FollowWallCleanMode: public ACleanMode{

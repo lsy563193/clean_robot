@@ -8,6 +8,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "mode.h"
+#include "device.h"
 
 class Robot {
 
@@ -28,10 +29,18 @@ private:
     KeyVisit *spot_clean_key{new SpotCleanKeyVisit};
     KeyVisit *follow_wall_clean_key{new FollowWallCleanKeyVisit};
     IMode *p_mode_{IDLE_MODE};
+    Devices* devices{new Devices};
+public:
+    Devices *getDevices() const;
+
+public:
+
 public:
     IMode *getMode() const;
 
     void setMode(IMode *p_mode_);
+
+    void work();
 };
 
 
