@@ -124,9 +124,9 @@ include_directories(
 ## Declare a C++ library
  add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/path_plan.cpp
-    src/path_plan/path_plan.cpp
+         src/path_plan/robot.cpp
     src/path_plan/mode.cpp
-    src/path_plan/visit.cpp
+         src/path_plan/key_visit.cpp
          )
 
 ## Add cmake target dependencies of the library

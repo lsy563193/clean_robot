@@ -11,14 +11,14 @@ class IdleMode;
 class NormalCleanMode;
 
 
-class Visit {
+class KeyVisit {
 public:
     virtual void visit(IdleMode *mode)=0;
     virtual void visit(NormalCleanMode *mode)=0;
-    virtual ~Visit()= default;
+    virtual ~KeyVisit()= default;
 };
 
-class CleanVisit:public Visit
+class CleanKeyVisit:public KeyVisit
 {
 public:
     void visit(IdleMode *mode);

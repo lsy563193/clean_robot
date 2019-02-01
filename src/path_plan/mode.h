@@ -6,19 +6,26 @@
 #define PATH_PLAN_MODE_H
 
 #include "ros/ros.h"
-#include "visit.h"
+#include "key_visit.h"
 
+class Robot;
 class IMode {
 public:
     virtual void exit()=0;
-    virtual void accept(Visit* visit) = 0;
+    virtual void accept(KeyVisit* key) = 0;
     virtual ~IMode();
+    Robot *getRobot() const;
+
+private:
+    static Robot* robot;
+public:
+    static void setRobot(Robot *robot);
 };
 
 class IdleMode: public IMode{
 public:
     void exit();
-    void accept(Visit* visit);
+    void accept(KeyVisit* key);
 };
 
 //class ACleanMode:public IMode{
@@ -28,7 +35,7 @@ public:
 class NormalCleanMode: public IMode{
 public:
     void exit();
-    void accept(Visit* visit);
+    void accept(KeyVisit* key);
 };
 
 //class FollowWallCleanMode: public ACleanMode{
