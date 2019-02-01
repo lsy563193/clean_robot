@@ -17,6 +17,7 @@ public:
     static IMode *NORMAL_CLEAN_MODE;
     static IMode *SPOT_CLEAN_MODE;
     static IMode *FOLLOW_WALL_CLEAN_MODE;
+    static IMode *EXPLORATION_MODE;
 
     Robot();
 
@@ -28,6 +29,7 @@ private:
     KeyVisit *normal_clean_key{new NormalCleanKeyVisit};
     KeyVisit *spot_clean_key{new SpotCleanKeyVisit};
     KeyVisit *follow_wall_clean_key{new FollowWallCleanKeyVisit};
+    KeyVisit *exploration_key{new ExplorationKeyVisit};
     IMode *p_mode_{IDLE_MODE};
     Devices* devices{new Devices};
 public:

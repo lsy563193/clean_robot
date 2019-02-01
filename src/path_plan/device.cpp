@@ -105,6 +105,14 @@ void Vaccum::spotClean() {
     ROS_INFO("Vaccum spotClean");
 }
 
+void Vaccum::exploration() {
+	ROS_INFO("Vaccum exploration");
+}
+
+void Vaccum::followWallClean() {
+	ROS_INFO("Vaccum followWallClean");
+}
+
 void Brush::normalClean() {
     ROS_INFO("Brush normalClean");
 }
@@ -114,6 +122,14 @@ void Brush::idle() {
 
 void Brush::spotClean() {
     ROS_INFO("Brush spotClean");
+}
+
+void Brush::exploration() {
+	ROS_INFO("Brush exploration");
+}
+
+void Brush::followWallClean() {
+	ROS_INFO("Brush followWallClean");
 }
 
 void WaterTank::normalClean() {
@@ -126,6 +142,19 @@ void WaterTank::idle() {
 
 void WaterTank::spotClean() {
     ROS_INFO("WaterTank spotClean");
+}
+
+void WaterTank::exploration() {
+	ROS_INFO("WaterTank exploration");
+}
+
+void WaterTank::followWallClean() {
+	ROS_INFO("WaterTank followWallClean");
+}
+
+Speaker::Speaker() {
+    ros::NodeHandle nh;
+    speaker_pub_ = nh.advertise<sound_play::SoundRequest>("/robotsound",1);;
 }
 
 void Speaker::normalClean() {
@@ -158,9 +187,24 @@ void Speaker::spotClean() {
     speaker_pub_.publish(msg);
 }
 
-Speaker::Speaker() {
-    ros::NodeHandle nh;
-    speaker_pub_ = nh.advertise<sound_play::SoundRequest>("/robotsound",1);;
+void Speaker::exploration() {
+    ROS_INFO("Speaker spotClean");
+    sound_play::SoundRequest msg;
+    msg.sound = sound_play::SoundRequest::PLAY_FILE;
+    msg.command = sound_play::SoundRequest::PLAY_ONCE;
+	msg.volume = 0.5;
+    msg.arg = "/home/syue/catkin_ws/src/syue_robot/path_plan/audio_cn/47.wav";
+    speaker_pub_.publish(msg);
+}
+
+void Speaker::followWallClean() {
+   ROS_INFO("Speaker spotClean");
+    sound_play::SoundRequest msg;
+    msg.sound = sound_play::SoundRequest::PLAY_FILE;
+    msg.command = sound_play::SoundRequest::PLAY_ONCE;
+	msg.volume = 0.5;
+    msg.arg = "/home/syue/catkin_ws/src/syue_robot/path_plan/audio_cn/05.wav";
+    speaker_pub_.publish(msg);
 }
 
 Devices::Devices() {
@@ -195,5 +239,12 @@ void Devices::followWallClean() {
     for(auto&& dev:devices_)
     {
         dev->normalClean();
+    }
+}
+
+void Devices::exploration() {
+	for(auto&& dev:devices_)
+    {
+        dev->exploration();
     }
 }

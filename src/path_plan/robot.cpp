@@ -8,6 +8,7 @@ IMode *Robot::IDLE_MODE = new IdleMode;
 IMode *Robot::NORMAL_CLEAN_MODE = new NormalCleanMode;
 IMode *Robot::SPOT_CLEAN_MODE = new SpotCleanMode;
 IMode *Robot::FOLLOW_WALL_CLEAN_MODE = new FollowWallCleanMode;
+IMode *Robot::EXPLORATION_MODE = new ExplorationMode;
 
 void Robot::KeyCb(const std_msgs::String::ConstPtr &msg) {
     if (msg->data == "normal_clean") {
@@ -17,6 +18,8 @@ void Robot::KeyCb(const std_msgs::String::ConstPtr &msg) {
         p_mode_->accept(spot_clean_key);
     } else if (msg->data == "follow_wall_clean") {
         p_mode_->accept(follow_wall_clean_key);
+    } else if (msg->data == "exploration") {
+        p_mode_->accept(exploration_key);
     } else {
         ROS_INFO("I not heard: [%s]", msg->data.c_str());
     }
@@ -32,7 +35,9 @@ void Robot::setMode(IMode *p_mode_) {
 
 void Robot::work() {
     if(p_mode_ != nullptr)
+    {
         p_mode_->updateDevice();
+    }
 }
 
 Devices *Robot::getDevices() const {

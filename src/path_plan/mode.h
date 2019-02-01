@@ -58,6 +58,13 @@ public:
     void updateDevice();
 };
 
+class ExplorationMode: public IMode{
+public:
+    void exit() override;
+    void accept(KeyVisit* key);
+    void updateDevice() override;
+};
+
 //class FollowWallCleanMode: public ACleanMode{
 //public:
 //    void clean();

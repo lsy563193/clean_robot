@@ -78,3 +78,14 @@ void FollowWallCleanMode::updateDevice() {
 //void IMode::updateDevice() {
 //    devices.action();
 //}
+void ExplorationMode::exit() {
+    ROS_INFO("ExplorationMode::exit()");
+}
+
+void ExplorationMode::accept(KeyVisit *key) {
+    key->visit(this);
+}
+
+void ExplorationMode::updateDevice() {
+    getRobot()->getDevices()->exploration();
+}
