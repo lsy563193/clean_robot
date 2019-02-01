@@ -10,24 +10,34 @@ class Robot;
 
 class Device {
 public:
-    virtual void open() =0 ;
-    virtual void close() =0;
+    virtual void normalClean() =0 ;
+    virtual void spotClean() =0 ;
+    virtual void idle() =0;
 };
 
 class Vaccum:public Device{
 public:
-   void open();
-   void close();
+   void normalClean();
+   void spotClean();
+   void idle();
 };
 class Brush:public Device{
 public:
-   void open();
-   void close();
+   void normalClean();
+   void spotClean();
+   void idle();
 };
 class WaterTank:public Device{
 public:
-   void open();
-   void close();
+   void normalClean();
+   void spotClean();
+   void idle();
+};
+class Speaker:public Device{
+public:
+   void normalClean();
+   void spotClean();
+   void idle();
 };
 
 class Devices{

@@ -6,39 +6,64 @@
 #include "boost/assign.hpp"
 #include "mode.h"
 
-void Device::open() {
+void Device::normalClean() {
     ROS_INFO("Open");
 }
 
-void Device::close() {
+void Device::idle() {
     ROS_INFO("Close");
 }
 
-void Vaccum::open() {
+void Vaccum::normalClean() {
     ROS_INFO("Vaccum Open");
 }
 
-void Vaccum::close() {
-    ROS_INFO("Vaccum close");
-}
-void Brush::open() {
-    ROS_INFO("Brush Open");
-}
-void Brush::close() {
-    ROS_INFO("Brush close");
+void Vaccum::idle() {
+    ROS_INFO("Vaccum idle");
 }
 
-void WaterTank::open() {
-    ROS_INFO("Brush Open");
+void Vaccum::spotClean() {
+    ROS_INFO("Vaccum spotClean");
 }
 
-void WaterTank::close() {
-    ROS_INFO("Brush close");
+void Brush::normalClean() {
+    ROS_INFO("Brush normalClean");
+}
+void Brush::idle() {
+    ROS_INFO("Brush idle");
+}
+
+void Brush::spotClean() {
+    ROS_INFO("Brush spotClean");
+}
+
+void WaterTank::normalClean() {
+    ROS_INFO("WaterTank normalClean");
+}
+
+void WaterTank::idle() {
+    ROS_INFO("WaterTank idle");
+}
+
+void WaterTank::spotClean() {
+    ROS_INFO("WaterTank spotClean");
+}
+
+void Speaker::normalClean() {
+    ROS_INFO("Speaker normalClean");
+}
+
+void Speaker::idle() {
+    ROS_INFO("Speaker idle");
+}
+
+void Speaker::spotClean() {
+    ROS_INFO("Speaker spotClean");
 }
 
 Devices::Devices() {
     using namespace boost::assign;
-    devices_ += new WaterTank,new Brush, new Vaccum;
+    devices_ += new WaterTank,new Brush, new Vaccum, new Speaker;
 }
 
 void Devices::action()const {
@@ -48,25 +73,25 @@ void Devices::action()const {
 void Devices::idle() {
     for(auto&& dev:devices_)
     {
-        dev->close();
+        dev->idle();
     }
 }
 
 void Devices::normalClean() {
     for(auto&& dev:devices_)
     {
-        dev->open();
+        dev->normalClean();
     }
 }
 void Devices::spotClean() {
     for(auto&& dev:devices_)
     {
-        dev->open();
+        dev->normalClean();
     }
 }
 void Devices::followWallClean() {
     for(auto&& dev:devices_)
     {
-        dev->open();
+        dev->normalClean();
     }
 }
