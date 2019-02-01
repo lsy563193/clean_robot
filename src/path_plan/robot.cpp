@@ -6,13 +6,20 @@
 
 IMode *Robot::IDLE_MODE = new IdleMode;
 IMode *Robot::NORMAL_CLEAN_MODE = new NormalCleanMode;
+IMode *Robot::SPOT_CLEAN_MODE = new SpotCleanMode;
+IMode *Robot::FOLLOW_WALL_CLEAN_MODE = new FollowWallCleanMode;
 
 void Robot::KeyCb(const std_msgs::String::ConstPtr &msg) {
     if (msg->data == "normal_clean") {
-        ROS_INFO("I heard: [%s]", msg->data.c_str());
         p_mode_->accept(normal_clean_key);
-    } else {
-
+    } else
+    if (msg->data == "spot_clean") {
+        p_mode_->accept(spot_clean_key);
+    }
+    if (msg->data == "follow_wall_clean") {
+        p_mode_->accept(follow_wall_clean_key);
+    }
+    else {
         ROS_INFO("I not heard: [%s]", msg->data.c_str());
     }
 }

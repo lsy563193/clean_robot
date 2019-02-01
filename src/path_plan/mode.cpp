@@ -40,3 +40,19 @@ void NormalCleanMode::accept(KeyVisit *key) {
 void NormalCleanMode::exit() {
     ROS_INFO("NormalCleanMode::exit()");
 }
+
+void SpotCleanMode::exit() {
+    ROS_INFO("SpotCleanMode::exit()");
+}
+
+void SpotCleanMode::accept(KeyVisit *key) {
+    key->visit(this);
+}
+
+void FollowWallCleanMode::exit() {
+    ROS_INFO("FollowWallCleanMode::exit()");
+}
+
+void FollowWallCleanMode::accept(KeyVisit *key) {
+    key->visit(this);
+}

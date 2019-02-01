@@ -14,6 +14,8 @@ class Robot {
 public:
     static IMode *IDLE_MODE;
     static IMode *NORMAL_CLEAN_MODE;
+    static IMode *SPOT_CLEAN_MODE;
+    static IMode *FOLLOW_WALL_CLEAN_MODE;
 
     Robot();
 
@@ -22,7 +24,9 @@ public:
 private:
     ros::Subscriber key_sub_;
 private:
-    KeyVisit *normal_clean_key{new CleanKeyVisit};
+    KeyVisit *normal_clean_key{new NormalCleanKeyVisit};
+    KeyVisit *spot_clean_key{new SpotCleanKeyVisit};
+    KeyVisit *follow_wall_clean_key{new FollowWallCleanKeyVisit};
     IMode *p_mode_{IDLE_MODE};
 public:
     IMode *getMode() const;

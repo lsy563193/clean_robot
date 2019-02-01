@@ -38,6 +38,18 @@ public:
     void accept(KeyVisit* key);
 };
 
+class SpotCleanMode: public IMode{
+public:
+    void exit();
+    void accept(KeyVisit* key);
+};
+
+class FollowWallCleanMode: public IMode{
+public:
+    void exit();
+    void accept(KeyVisit* key);
+};
+
 //class FollowWallCleanMode: public ACleanMode{
 //public:
 //    void clean();
