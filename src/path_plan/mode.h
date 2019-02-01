@@ -21,7 +21,6 @@ public:
 
 private:
     static Robot* robot;
-    Devices devices;
 public:
     static void setRobot(Robot *robot);
 };

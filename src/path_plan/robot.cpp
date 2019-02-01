@@ -30,6 +30,15 @@ void Robot::setMode(IMode *p_mode_) {
     Robot::p_mode_ = p_mode_;
 }
 
+void Robot::work() {
+    if(p_mode_ != nullptr)
+        p_mode_->updateDevice();
+}
+
+Devices *Robot::getDevices() const {
+    return devices;
+}
+
 Robot::Robot() {
     ROS_INFO("init");
     ros::NodeHandle n("");
@@ -39,11 +48,3 @@ Robot::Robot() {
 }
 
 
-void Robot::work() {
-    if(p_mode_ != nullptr)
-        p_mode_->updateDevice();
-}
-
-Devices *Robot::getDevices() const {
-    return devices;
-}

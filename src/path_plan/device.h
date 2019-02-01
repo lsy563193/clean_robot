@@ -6,6 +6,7 @@
 #define PATH_PLAN_DEVICE_H
 
 #include "ros/ros.h"
+
 class Robot;
 
 class Device {
@@ -17,27 +18,31 @@ public:
 
 class Vaccum:public Device{
 public:
-   void normalClean();
-   void spotClean();
-   void idle();
+   void normalClean() override;
+   void spotClean() override;
+   void idle() override;
 };
 class Brush:public Device{
 public:
-   void normalClean();
-   void spotClean();
-   void idle();
+   void normalClean() override;
+   void spotClean() override;
+   void idle() override;
 };
 class WaterTank:public Device{
 public:
-   void normalClean();
-   void spotClean();
-   void idle();
+   void normalClean() override;
+   void spotClean() override;
+   void idle() override;
 };
 class Speaker:public Device{
 public:
-   void normalClean();
-   void spotClean();
-   void idle();
+   Speaker();
+   void normalClean() override;
+   void spotClean() override;
+   void idle() override;
+
+private:
+    ros::Publisher speaker_pub_;
 };
 
 class Devices{

@@ -11,9 +11,12 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  cmake_modules
   tf
 )
 
+find_package(PkgConfig)
+pkg_check_modules(ALSA alsa REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system assign)
 
@@ -119,6 +122,7 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${ALSA_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -153,7 +157,8 @@ include_directories(
  target_link_libraries(${PROJECT_NAME}_node
    ${catkin_LIBRARIES}
          path_plan
- )
+         ${ALSA_LIBRARIES}
+  )
 
 #############
 ## Install ##
