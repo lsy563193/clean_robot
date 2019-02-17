@@ -4,8 +4,6 @@
 
 #include "robot.h"
 
-#include <utility>
-
 SpMode Robot::IDLE_MODE{new IdleMode};
 SpMode Robot::NORMAL_CLEAN_MODE{new NormalCleanMode};
 SpMode Robot::SPOT_CLEAN_MODE{new SpotCleanMode};

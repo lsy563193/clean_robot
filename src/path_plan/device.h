@@ -6,14 +6,16 @@
 #define PATH_PLAN_DEVICE_H
 
 #include "ros/ros.h"
+#include "command.h"
 
 class Robot;
 
-class Device {
+class Device: private Command {
 public:
+    Device();
+    virtual void idle() =0;
     virtual void normalClean() =0 ;
     virtual void spotClean() =0 ;
-    virtual void idle() =0;
     virtual void exploration() =0;
     virtual void followWallClean() =0;
 };
@@ -71,19 +73,26 @@ private:
 };
 
 using SpDevide = std::shared_ptr<Device>;
-class Devices{
+class Devices:private Command{
 public:
-    void idle();
-    void normalClean();
-    void spotClean();
-    void followWallClean();
-    void exploration();
+    void idle() override ;
+    void normalClean()override;
+    void spotClean()override;
+    void followWallClean()override;
+    void exploration()override;
     Devices();
     void action()const;
 
 private:
 
-    std::vector<SpDevide> devices_;
+    std::vector<SpDevide> devices_{};
+
+    SpDevide pWaterTank{new WaterTank};
+    SpDevide pBrush{new Brush};
+    SpDevide pVaccum{new Vaccum};
+    SpDevide pSpeaker{new Speaker};
+    SpDevide pGyro{new Gyro};
+
 };
 using SpDevides = std::shared_ptr<Devices>;
 #endif //PATH_PLAN_DEVICE_H

@@ -131,6 +131,7 @@ include_directories(
          src/path_plan/robot.cpp
     src/path_plan/mode.cpp
          src/path_plan/key_visit.cpp
+         src/path_plan/command.cpp
          src/path_plan/device.cpp)
 
 ## Add cmake target dependencies of the library

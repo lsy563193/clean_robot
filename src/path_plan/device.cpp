@@ -208,25 +208,30 @@ void Speaker::followWallClean() {
 
 Devices::Devices() {
     using namespace boost::assign;
-    devices_ += SpDevide{new WaterTank}, SpDevide{new Brush},SpDevide{new Vaccum}, SpDevide{new Speaker}, SpDevide{new Gyro};
+    ROS_INFO("device add");
+    devices_ += pWaterTank, pBrush,pVaccum, pSpeaker, pGyro;
 }
 
 void Devices::action()const {
-
+	for(auto&& dev:devices_)
+    {
+        dev->normalClean();
+    }
 }
 
 void Devices::idle() {
-    for(auto&& dev:devices_)
+	for(auto&& dev:devices_)
     {
         dev->idle();
     }
 }
 
 void Devices::normalClean() {
-    for(auto&& dev:devices_)
-    {
-        dev->normalClean();
-    }
+    pGyro->normalClean();
+	pBrush->normalClean();
+	pVaccum->normalClean();
+	pSpeaker->normalClean();
+	pWaterTank->normalClean();
 }
 void Devices::spotClean() {
     for(auto&& dev:devices_)
@@ -266,4 +271,8 @@ void Gyro::exploration() {
 
 void Gyro::followWallClean() {
 	ROS_INFO("%s: %s", typeid(this).name(),"open");
+}
+
+Device::Device() {
+//	ROS_INFO("%s: %s", typeid(this).name(),"create");
 }
