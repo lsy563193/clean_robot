@@ -10,7 +10,7 @@ project(path_plan)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  std_msgs
+#  std_msgs
   cmake_modules
   tf
 )
@@ -109,7 +109,7 @@ pkg_check_modules(ALSA alsa REQUIRED)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES path_plan
-  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy #[[std_msgs]]
 #  DEPENDS system_lib
 )
 

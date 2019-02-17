@@ -10,11 +10,14 @@
 #include "device.h"
 
 class Robot;
-class IMode {
+class IMode:public std::enable_shared_from_this<IMode> {
 public:
     virtual void exit()=0;
     virtual void accept(KeyVisit* key) = 0;
     virtual ~IMode();
+
+    IMode();
+
     Robot *getRobot() const;
 
     virtual void updateDevice()=0;
@@ -27,9 +30,11 @@ public:
 
 class IdleMode: public IMode{
 public:
-    void exit();
+    IdleMode();
+
+    void exit() override;
     void accept(KeyVisit* key);
-    void updateDevice();
+    void updateDevice() override;
 
 };
 
@@ -39,7 +44,7 @@ public:
 
 class NormalCleanMode: public IMode{
 public:
-    void exit();
+    void exit() override;
     void accept(KeyVisit* key);
     void updateDevice();
 };

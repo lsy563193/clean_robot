@@ -85,71 +85,64 @@ typedef enum {
 	VOICE_END = 75,
 }VoiceType;
 
-void Device::normalClean() {
-    ROS_INFO("Open");
-}
-
-void Device::idle() {
-    ROS_INFO("Close");
-}
 
 void Vaccum::normalClean() {
-    ROS_INFO("Vaccum Open");
+	ROS_INFO("%s: %s", typeid(this).name(),"normal open");
 }
 
 void Vaccum::idle() {
-    ROS_INFO("Vaccum idle");
+	ROS_INFO("%s: %s", typeid(this).name(),"close");
 }
 
 void Vaccum::spotClean() {
-    ROS_INFO("Vaccum spotClean");
+	ROS_INFO("%s: %s", typeid(this).name(),"spot open");
 }
 
 void Vaccum::exploration() {
-	ROS_INFO("Vaccum exploration");
+	ROS_INFO("%s: %s", typeid(this).name(),"slow open");
 }
 
 void Vaccum::followWallClean() {
-	ROS_INFO("Vaccum followWallClean");
+	ROS_INFO("%s: %s", typeid(this).name(),"normal open");
 }
 
 void Brush::normalClean() {
-    ROS_INFO("Brush normalClean");
+	ROS_INFO("%s: %s", typeid(this).name(),"normal open");
 }
 void Brush::idle() {
-    ROS_INFO("Brush idle");
+	ROS_INFO("%s: %s", typeid(this).name(),"close");
 }
 
 void Brush::spotClean() {
-    ROS_INFO("Brush spotClean");
+	ROS_INFO("%s: %s", typeid(this).name(),"spot open");
 }
 
 void Brush::exploration() {
-	ROS_INFO("Brush exploration");
+	ROS_INFO("%s: %s", typeid(this).name(),"slow open");
 }
 
 void Brush::followWallClean() {
-	ROS_INFO("Brush followWallClean");
+	ROS_INFO("%s: %s", typeid(this).name(),"normal open");
 }
 
 void WaterTank::normalClean() {
-    ROS_INFO("WaterTank normalClean");
+	ROS_INFO("%s: %s", typeid(this).name(),"normal open");
 }
 
 void WaterTank::idle() {
-    ROS_INFO("WaterTank idle");
+	ROS_INFO("%s: %s", typeid(this).name(),"close");
 }
 
 void WaterTank::spotClean() {
-    ROS_INFO("WaterTank spotClean");
+	ROS_INFO("%s: %s", typeid(this).name(),"spot open");
 }
 
 void WaterTank::exploration() {
-	ROS_INFO("WaterTank exploration");
+	ROS_INFO("%s: %s", typeid(this).name(),"close");
 }
 
 void WaterTank::followWallClean() {
-	ROS_INFO("WaterTank followWallClean");
+	ROS_INFO("%s: %s", typeid(this).name(),"nornal open");
 }
 
 Speaker::Speaker() {
@@ -173,7 +166,13 @@ void Speaker::idle() {
     msg.sound = sound_play::SoundRequest::PLAY_FILE;
     msg.command = sound_play::SoundRequest::PLAY_ONCE;
     msg.volume = 0.5;
-    msg.arg = "/home/syue/catkin_ws/src/syue_robot/path_plan/audio_cn/03.wav";
+    if(!is_power_up_)
+	{
+        is_power_up_ = true;
+		msg.arg = "/home/syue/catkin_ws/src/syue_robot/path_plan/audio_cn/03.wav";
+	}
+		msg.arg = "/home/syue/catkin_ws/src/syue_robot/path_plan/audio_cn/02.wav";
+    sleep(1);
     speaker_pub_.publish(msg);
 }
 
@@ -209,7 +208,7 @@ void Speaker::followWallClean() {
 
 Devices::Devices() {
     using namespace boost::assign;
-    devices_ += new WaterTank,new Brush, new Vaccum, new Speaker;
+    devices_ += SpDevide{new WaterTank}, SpDevide{new Brush},SpDevide{new Vaccum}, SpDevide{new Speaker}, SpDevide{new Gyro};
 }
 
 void Devices::action()const {
@@ -247,4 +246,24 @@ void Devices::exploration() {
     {
         dev->exploration();
     }
+}
+
+void Gyro::normalClean() {
+	ROS_INFO("%s: %s", typeid(this).name(),"open");
+}
+
+void Gyro::spotClean() {
+	ROS_INFO("%s: %s", typeid(this).name(),"open");
+}
+
+void Gyro::idle() {
+	ROS_INFO("%s: %s", typeid(this).name(),"close");
+}
+
+void Gyro::exploration() {
+	ROS_INFO("%s: %s", typeid(this).name(),"open");
+}
+
+void Gyro::followWallClean() {
+	ROS_INFO("%s: %s", typeid(this).name(),"open");
 }

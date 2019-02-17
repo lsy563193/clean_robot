@@ -10,14 +10,14 @@
 #include "mode.h"
 #include "device.h"
 
+using SpMode = std::shared_ptr<IMode>;
 class Robot {
-
 public:
-    static IMode *IDLE_MODE;
-    static IMode *NORMAL_CLEAN_MODE;
-    static IMode *SPOT_CLEAN_MODE;
-    static IMode *FOLLOW_WALL_CLEAN_MODE;
-    static IMode *EXPLORATION_MODE;
+    static SpMode IDLE_MODE;
+    static SpMode NORMAL_CLEAN_MODE;
+    static SpMode SPOT_CLEAN_MODE;
+    static SpMode FOLLOW_WALL_CLEAN_MODE;
+    static SpMode EXPLORATION_MODE;
 
     Robot();
 
@@ -30,17 +30,17 @@ private:
     KeyVisit *spot_clean_key{new SpotCleanKeyVisit};
     KeyVisit *follow_wall_clean_key{new FollowWallCleanKeyVisit};
     KeyVisit *exploration_key{new ExplorationKeyVisit};
-    IMode *p_mode_{IDLE_MODE};
-    Devices* devices{new Devices};
+    SpMode p_mode_{};
+    SpDevides devices{new Devices};
 public:
-    Devices *getDevices() const;
+    SpDevides getDevices() const;
 
 public:
 
 public:
-    IMode *getMode() const;
+//    SpMode getMode() const;
 
-    void setMode(IMode *p_mode_);
+    void setMode(SpMode p_mode_);
 
     void work();
 };

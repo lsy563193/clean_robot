@@ -4,13 +4,18 @@
 
 #include "robot.h"
 
-IMode *Robot::IDLE_MODE = new IdleMode;
-IMode *Robot::NORMAL_CLEAN_MODE = new NormalCleanMode;
-IMode *Robot::SPOT_CLEAN_MODE = new SpotCleanMode;
-IMode *Robot::FOLLOW_WALL_CLEAN_MODE = new FollowWallCleanMode;
-IMode *Robot::EXPLORATION_MODE = new ExplorationMode;
+#include <utility>
+
+SpMode Robot::IDLE_MODE{new IdleMode};
+SpMode Robot::NORMAL_CLEAN_MODE{new NormalCleanMode};
+SpMode Robot::SPOT_CLEAN_MODE{new SpotCleanMode};
+SpMode Robot::FOLLOW_WALL_CLEAN_MODE{new FollowWallCleanMode};
+SpMode Robot::EXPLORATION_MODE{new ExplorationMode};
 
 void Robot::KeyCb(const std_msgs::String::ConstPtr &msg) {
+    if (msg->data == "idle") {
+        p_mode_->accept(normal_clean_key);
+    }
     if (msg->data == "normal_clean") {
         p_mode_->accept(normal_clean_key);
     }
@@ -25,12 +30,12 @@ void Robot::KeyCb(const std_msgs::String::ConstPtr &msg) {
     }
 }
 
-IMode *Robot::getMode() const {
-    return p_mode_;
-}
+//SpMode Robot::getMode() const {
+//    return p_mode_;
+//}
 
-void Robot::setMode(IMode *p_mode_) {
-    Robot::p_mode_ = p_mode_;
+void Robot::setMode(SpMode p_mode_) {
+    Robot::p_mode_ = std::move(p_mode_);
 }
 
 void Robot::work() {
@@ -40,16 +45,15 @@ void Robot::work() {
     }
 }
 
-Devices *Robot::getDevices() const {
+SpDevides Robot::getDevices() const {
     return devices;
 }
 
 Robot::Robot() {
-    ROS_INFO("init");
     ros::NodeHandle n("");
-    key_sub_ = n.subscribe<std_msgs::String>("key", 1, &Robot::KeyCb, this);
+
     p_mode_->setRobot(this);
-    ROS_INFO("~init");
+    key_sub_ = n.subscribe<std_msgs::String>("key", 1, &Robot::KeyCb, this);
+    setMode(Robot::IDLE_MODE);
+    work();
 }
-
-

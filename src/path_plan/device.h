@@ -53,8 +53,24 @@ public:
 
 private:
     ros::Publisher speaker_pub_;
+    bool is_power_up_{};
 };
 
+class Gyro:public Device{
+public:
+   Gyro() = default;
+   void normalClean() override;
+   void spotClean() override;
+   void idle() override;
+   void exploration() override;
+   void followWallClean() override;
+
+private:
+    ros::Publisher speaker_pub_;
+    bool is_power_up_{};
+};
+
+using SpDevide = std::shared_ptr<Device>;
 class Devices{
 public:
     void idle();
@@ -67,6 +83,7 @@ public:
 
 private:
 
-    std::vector<Device*> devices_;
+    std::vector<SpDevide> devices_;
 };
+using SpDevides = std::shared_ptr<Devices>;
 #endif //PATH_PLAN_DEVICE_H

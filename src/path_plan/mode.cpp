@@ -10,6 +10,9 @@
 //}
 Robot* IMode::robot{};
 
+IMode::IMode() {
+}
+
 IMode::~IMode() {
     ROS_INFO("~IMode");
 }
@@ -36,6 +39,10 @@ void IdleMode::exit() {
 
 void IdleMode::updateDevice() {
     getRobot()->getDevices()->idle();
+}
+
+IdleMode::IdleMode() {
+//    ROS_INFO("");
 }
 
 void NormalCleanMode::accept(KeyVisit *key) {
